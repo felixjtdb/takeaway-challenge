@@ -15,17 +15,20 @@ class Order
   end
 
   def basket
+    raise "Basket empty" if @order_list.empty?
     @order_list.each_pair do |dish, occurance|
       puts "#{occurance} X #{dish} = £#{occurance * @menu.dishes[dish]}"
     end
     puts "total : £#{@total_price}"
   end
 
-  def price_check(price)
-    @total_price == price
+  def complete_order(expected_bill)
+    price_check(expected_bill) ? text = Text.new : return "bills dpnt match, look in your basket"
+    text.send_text
   end
 
-  def complete_order
-    basket
+  private
+  def price_check(price)
+    @total_price == price
   end
 end

@@ -22,21 +22,21 @@ describe Order do
     end
   end
 
-  describe "#price_check" do
-    it "checks if price given is equal to the recorded total" do
-      subject.order(dish2)
-      expect(subject.price_check(5)).to eq true
-    end
-    it "checks if price given is equal to the recorded total" do
-      subject.order(dish2)
-      expect(subject.price_check(4)).to eq false
-    end
-  end
-
   describe '#basket' do
     it "returns order_list in a user friendly format" do
       subject.order(dish1)
       expect{subject.basket}.to output("1 X #{dish1} = £2\ntotal : £2\n").to_stdout
+    end
+  end
+
+  describe "#complete_order" do
+    it "complete order when total matches expected total" do
+      subject.order(dish1)
+      expect(subject.complete_order(2)).to eq "text sent"
+    end
+    it "complete order when total doesnt match expected total" do
+      subject.order(dish1)
+      expect(subject.complete_order(5)).to eq subject.basket
     end
   end
 end
