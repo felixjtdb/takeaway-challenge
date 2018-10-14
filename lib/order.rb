@@ -1,6 +1,7 @@
+require_relative 'menu'
 class Order
   attr_reader :menu, :order_list, :total_price
-  
+
   def initialize
     @menu = Menu.new
     @order_list = Hash.new(0)
@@ -13,17 +14,18 @@ class Order
     @total_price += @menu.dishes[dish]
   end
 
-  def contains_item?(item)
-    @order_list.include?(item) ? true : false
-  end
-
-  def format_order
+  def basket
     @order_list.each_pair do |dish, occurance|
-      "#{occurance} X #{dish}"
+      puts "#{occurance} X #{dish} = £#{occurance * @menu.dishes[dish]}"
     end
-
+    puts "total : £#{@total_price}"
   end
 
+  def price_check(price)
+    @total_price == price
+  end
 
-
+  def complete_order
+    basket
+  end
 end

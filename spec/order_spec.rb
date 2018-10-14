@@ -20,19 +20,23 @@ describe Order do
     it "order total is increases by added items price" do
       expect{subject.order(dish1)}.to change{subject.total_price}.by(subject.menu.dishes[dish1])
     end
-
-
-    # describe '#format_order' do
-    #   it "returns order_list in a user friendly format" do
-    #     subject.order(dish1)
-    #     expect(subject.format_order).to eq("1 X #{dish1}")
-    #   end
-    # end
   end
-  # describe '#checkout_list' do
-  #   it "lists quantities and dishes orderd" do
-  #     subject.order(dish1)
-  #     expect(subject.checkout_list).to eq({dish1 => 2})
-  #   end
-  # end
+
+  describe "#price_check" do
+    it "checks if price given is equal to the recorded total" do
+      subject.order(dish2)
+      expect(subject.price_check(5)).to eq true
+    end
+    it "checks if price given is equal to the recorded total" do
+      subject.order(dish2)
+      expect(subject.price_check(4)).to eq false
+    end
+  end
+
+  describe '#basket' do
+    it "returns order_list in a user friendly format" do
+      subject.order(dish1)
+      expect{subject.basket}.to output("1 X #{dish1} = £2\ntotal : £2\n").to_stdout
+    end
+  end
 end
